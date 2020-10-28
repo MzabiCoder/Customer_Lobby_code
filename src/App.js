@@ -1,23 +1,23 @@
-import logo from './logo.svg';
-import './App.css';
-
+import {useState,useEffect} from 'react'
+import { List } from './components/List' 
+import { Count } from './components/Count'
+import axios from 'axios'
+ 
 function App() {
+  const [counts,setCounts]=useState(0)
+  useEffect(() => {
+    const fetch = async ()=> {
+      const {data} = await axios('https://jsonplaceholder.typicode.com/users')
+       setCounts(data.length)
+      
+    }
+    fetch()
+}, [])
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Count counts={counts} />
+      <List  />
+      
     </div>
   );
 }
